@@ -1,0 +1,13 @@
+app = "replace-with-your-app-name"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[processes]
+  app = "python bot.py"
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1

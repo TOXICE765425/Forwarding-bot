@@ -1,0 +1,4 @@
+python-telegram-bot>=22.0,<23
+telethon>=1.42,<2
+firebase-admin>=7.0,<8
+python-dotenv>=1.0,<2
