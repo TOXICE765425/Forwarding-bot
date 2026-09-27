@@ -1,0 +1,22 @@
+{
+  "terms_title": "📜 आगे बढ़ने से पहले",
+  "terms": "यह बॉट कॉन्फ़िगर किए गए Telegram sources से वीडियो देता है। इसका उपयोग केवल उसी content के लिए करें जिसे access और receive करने की आपको अनुमति है।",
+  "agree": "✅ सहमत हूँ",
+  "disagree": "❌ असहमत",
+  "language": "🌐 भाषा",
+  "select_language": "🌐 अपनी भाषा चुनें:",
+  "not_for_you": "❌ यह आपके लिए नहीं है\n\nआप इस bot को इस्तेमाल करने के योग्य नहीं हैं।",
+  "welcome": "🎉 स्वागत है, {name}!",
+  "activated": "आपका access activate हो गया है।",
+  "select_agree": "❌ पहले Agree दबाएँ।",
+  "searching": "🔎 अधिकृत sources खोजे जा रहे हैं...",
+  "none": "📭 अभी और वीडियो उपलब्ध नहीं हैं।",
+  "sent": "✅ {count} वीडियो भेजे गए।",
+  "next": "📌 अगला batch: {start}–{end}",
+  "deleted": "🗑️ भेजी गई copies {hours} घंटे बाद delete होंगी।",
+  "help_title": "ℹ️ सहायता",
+  "help": "🎬 Video File — हर request पर 5 वीडियो भेजता है।\n🔢 हर user का sequence अलग होता है।\n🗑️ भेजी गई copies निर्धारित समय बाद अपने आप delete होती हैं।",
+  "failed": "⚠️ Videos could not be sent.",
+  "video_button": "🎬 Video File",
+  "help_button": "ℹ️ Help"
+}
