@@ -23,14 +23,20 @@ from handlers.start import (
 
 from handlers.user import (
     video_button,
-    help_button,
     auto_delete_worker,
 )
 
 from handlers.admin import (
     admin_command,
     admin_callback,
+    stats_command,
+    user_command,
+    activity_command,
+    bots_command,
+    help_command,
 )
+
+from handlers.broadcast import broadcast_command
 
 from handlers.sources import source_command
 
@@ -125,7 +131,7 @@ async def main():
     )
 
     app.add_handler(
-        CommandHandler("help", help_button)
+        CommandHandler("help", help_command)
     )
 
     app.add_handler(
@@ -135,6 +141,12 @@ async def main():
     app.add_handler(
         CommandHandler("source", source_command)
     )
+
+    app.add_handler(CommandHandler("stats", stats_command))
+    app.add_handler(CommandHandler("user", user_command))
+    app.add_handler(CommandHandler("activity", activity_command))
+    app.add_handler(CommandHandler("bots", bots_command))
+    app.add_handler(CommandHandler("broadcast", broadcast_command))
 
     # =========================
     # CALLBACK HANDLERS

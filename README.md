@@ -1,64 +1,109 @@
-# Telegram Video Distribution Bot
+# Forwarding Bot — Complete Firebase + CopyMessage Edition
 
-Modular Telegram bot for serving authorized videos from approved Telegram channels/groups.
+This bot distributes authorized videos from configured Telegram sources.
 
-## What it does
+## Main features
 
-- Consent screen: Agree / Disagree / Language
-- Multilingual UI scaffold
-- Per-user video pagination: 5 videos per request
-- Position persists in Firebase
-- Approved channel/group sources
-- Reads existing Telegram history through MTProto
-- Forwards videos directly from Telegram
-- Does not download video files to the bot server
-- Firebase stores only metadata, counters, source configuration and cleanup metadata
-- Sent copies are scheduled for deletion after 2 hours
-- Owner statistics and source management
-- Docker + Railway + Render + Fly.io deployment files
+### User
+- `/start` consent + language flow
+- `🎬 Video File` sends up to 5 videos per successful request
+- 10-minute per-user cooldown after a successful video batch
+- Sequence wraps back to the beginning after the last available video
+- Firebase permanently stores user profile, counters, position and cooldown
+- Sent copies are automatically deleted after `AUTO_DELETE_HOURS`
+- Bot API `copyMessage` is used, so Render does not download the video file
+- `protect_content=True` is enabled for copied videos
 
-## Important
+### Owner commands
 
-The MTProto account used by Telethon must legitimately have access to every source chat.
-Use this only for content you are authorized to access and redistribute.
+- `/admin` — owner panel
+- `/stats` — complete bot statistics
+- `/user` — Firebase user list, `/user 2` for next page
+- `/activity USER_ID` — detailed user activity and counters
+- `/bots` — compact statistics alias
+- `/broadcast` — reply to a message and broadcast it
+- `/broadcast bot` — alias for broadcast
+- `/broadcast Your text` — text broadcast
+- `/source add <chat_id> <title>`
+- `/source remove <chat_id>`
+- `/source list`
 
-## First run
+## Statistics
 
-1. Create a Telegram bot with BotFather and get BOT_TOKEN.
-2. Get API_ID and API_HASH from Telegram's official developer portal.
-3. Create a Firebase Realtime Database and service account.
-4. Put secrets in environment variables.
-5. Start locally:
-   `pip install -r requirements.txt`
-   `python bot.py`
-6. On first run, Telethon asks for the login code and 2FA password if enabled.
-7. After successful login, the session file is created under `sessions/`.
+Firebase tracks:
+- total users
+- active users (activity within `ACTIVE_USER_DAYS`)
+- total video requests
+- successful batches
+- failed requests
+- videos delivered
+- video failures
+- source count / enabled source count
+- broadcast runs
+- broadcast success/failure
 
-Never upload the session file or Firebase service-account JSON to GitHub.
+Per-user activity also records recent events under `activity/<user_id>`.
 
-## Owner commands
+## Firebase structure
 
-`/admin`
-`/source add -1001234567890 Title`
-`/source remove -1001234567890`
-`/source list`
+```text
+users/
+sources/
+cleanup/
+activity/
+stats/
+broadcasts/
+```
+
+No video files are stored in Firebase.
+
+## 10-minute cooldown
+
+The cooldown is stored as an ISO timestamp in:
+
+```text
+users/<USER_ID>/cooldown_until
+```
+
+If the user presses `🎬 Video File` before the timestamp, no new videos are sent.
+
+## Important Telegram requirement
+
+The Telegram Bot must have access to every configured source channel/chat. The Telethon account must also be legitimately authorized to read the source history.
+
+`copyMessage` copies the Telegram message server-side; the Render process does not download the media.
+
+Content protection can restrict Telegram forwarding/saving controls, but it cannot technically prevent screenshots or external recording.
+
+## Environment
+
+Required:
+- `BOT_TOKEN`
+- `OWNER_IDS`
+- `API_ID`
+- `API_HASH`
+- `SESSION_BASE64` or first-login `PHONE_NUMBER`
+- `FIREBASE_DATABASE_URL`
+- `FIREBASE_CREDENTIALS_JSON`
+
+Recommended:
+- `VIDEOS_PER_REQUEST=5`
+- `VIDEO_COOLDOWN_MINUTES=10`
+- `AUTO_DELETE_HOURS=2`
+- `ACTIVE_USER_DAYS=30`
 
 ## Deployment
 
-The same repository can be deployed as a worker/container on Railway, Render, Fly.io, Docker-capable VPS and similar services.
+Install:
 
-## Data model
+```bash
+pip install -r requirements.txt
+```
 
-Firebase:
-- users/
-- sources/
-- cleanup/
+Run:
 
-Actual video files are never uploaded to Firebase by this project.
+```bash
+python bot.py
+```
 
-
-## Multilingual note
-The locale system is included for all requested language codes. English is used as a safe fallback for locale keys that have not been professionally translated yet; add reviewed translations to the corresponding JSON files before production use.
-
-## Message deletion
-Because the MTProto account forwards the source messages, the MTProto account is also used to delete those forwarded copies after the configured time.
+Never commit Telegram session files or Firebase service-account credentials.

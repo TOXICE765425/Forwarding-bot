@@ -49,6 +49,10 @@ AUTO_DELETE_HOURS = int(
     os.getenv("AUTO_DELETE_HOURS", "2")
 )
 
+# Minimum time between successful video-batch requests per user.
+VIDEO_COOLDOWN_MINUTES = int(os.getenv("VIDEO_COOLDOWN_MINUTES", "10"))
+ACTIVE_USER_DAYS = int(os.getenv("ACTIVE_USER_DAYS", "30"))
+
 HISTORY_PAGE_SIZE = int(
     os.getenv("HISTORY_PAGE_SIZE", "100")
 )
@@ -68,3 +72,7 @@ INITIAL_SOURCE_IDS = [
     for x in os.getenv("INITIAL_SOURCE_IDS", "").split(",")
     if x.strip().lstrip("-").isdigit()
 ]
+
+# Consent/welcome presentation settings.
+CONSENT_AFTER_AGREE = os.getenv("CONSENT_AFTER_AGREE", "delete").strip().lower()
+WELCOME_USE_PROFILE_PHOTO = os.getenv("WELCOME_USE_PROFILE_PHOTO", "true").lower() in ("1", "true", "yes", "on")

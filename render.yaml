@@ -19,3 +19,11 @@ services:
         sync: false
       - key: FIREBASE_CREDENTIALS_JSON
         sync: false
+      - key: VIDEO_COOLDOWN_MINUTES
+        value: '10'
+      - key: ACTIVE_USER_DAYS
+        value: '30'
+      - key: VIDEOS_PER_REQUEST
+        value: '5'
+      - key: AUTO_DELETE_HOURS
+        value: '2'
