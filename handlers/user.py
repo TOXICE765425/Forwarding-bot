@@ -1,23 +1,34 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
-
 from telegram import Update
 from telegram.ext import ContextTypes
+from firebase import ensure_user, get_user, update_user, set_position, get_pending_deletions, add_cleanup, remove_cleanup, log_activity
+from config import VIDEOS_PER_REQUEST, AUTO_DELETE_HOURS, VIDEO_COOLDOWN_MINUTES
+from utils.i18n import t, language
 
-from firebase import (
-    ensure_user, get_user, update_user, set_position,
-    get_pending_deletions, add_cleanup, remove_cleanup,
-)
-from config import VIDEOS_PER_REQUEST, AUTO_DELETE_HOURS
+
+def _parse_dt(value):
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except Exception:
+        return None
+
+
+def _remaining(value):
+    dt = _parse_dt(value)
+    if not dt:
+        return 0
+    return max(0, int((dt - datetime.now(timezone.utc)).total_seconds()))
 
 
 async def help_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.effective_user:
+        return
+    uid = update.effective_user.id
+    ensure_user(update.effective_user)
     text = (
-        "ℹ️ <b>Help</b>\n\n"
-        f"🎬 Video File — har click par {VIDEOS_PER_REQUEST} videos.\n"
-        "🔁 Saare videos khatam hone ke baad sequence phir beginning se chalega.\n"
-        f"🗑️ Sent videos {AUTO_DELETE_HOURS} hours ke baad automatically delete hote hain.\n"
-        "📂 Videos configured Telegram sources se bot ke through copy hote hain."
+        f"<b>{t(uid, 'help_title')}</b>\n\n"
+        f"{t(uid, 'help', count=VIDEOS_PER_REQUEST, cooldown=VIDEO_COOLDOWN_MINUTES, hours=AUTO_DELETE_HOURS)}"
     )
     if update.message:
         await update.message.reply_text(text, parse_mode="HTML")
@@ -26,109 +37,106 @@ async def help_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def video_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not update.message or not update.effective_user:
         return
-
-    if (update.message.text or "").strip() != "🎬 Video File":
+    user = update.effective_user
+    uid = user.id
+    data = ensure_user(user)
+    text = (update.message.text or "").strip()
+    # Accept the currently selected language's label, plus labels from all locale files.
+    video_labels = {t(uid, "video_button")}
+    for code in ["en", "hi", "bn", "te", "mr", "ta", "gu", "ur", "kn", "ml", "pa", "ru", "zh", "ja", "es", "fr", "de", "pt", "ar", "tr", "id", "vi", "ko", "it", "nl", "pl", "uk", "fa", "th"]:
+        try:
+            import json
+            from pathlib import Path
+            p = Path(__file__).resolve().parent.parent / "locales" / f"{code}.json"
+            if p.exists():
+                video_labels.add(json.loads(p.read_text(encoding="utf8")).get("video_button", ""))
+        except Exception:
+            pass
+    if text not in video_labels:
+        # Help labels are handled here so the single text handler remains simple.
+        help_labels = {t(uid, "help_button")}
+        if text in help_labels:
+            await help_button(update, context)
         return
 
-    user = update.effective_user
-    data = ensure_user(user)
-
     if data.get("consent") != "agree":
-        await update.message.reply_text("❌ Please press Agree first.")
+        await update.message.reply_text(t(uid, "select_agree"))
+        return
+
+    remaining = _remaining(data.get("cooldown_until", ""))
+    if remaining > 0:
+        minutes, seconds = divmod(remaining, 60)
+        await update.message.reply_text(t(uid, "cooldown", minutes=minutes, seconds=seconds), parse_mode="HTML")
+        log_activity(uid, "cooldown_click", {"remaining_seconds": remaining})
         return
 
     client = context.application.bot_data["source_client"]
     position = max(0, int(data.get("position", 0) or 0))
+    now = datetime.now(timezone.utc)
+    update_user(uid, {"videos_requested": int(data.get("videos_requested", 0) or 0) + 1, "last_request_at": now.isoformat()})
+    log_activity(uid, "video_request", {"position": position, "batch_size": VIDEOS_PER_REQUEST})
+    status = await update.message.reply_text(t(uid, "searching"), parse_mode="HTML")
 
-    await update.message.reply_text("🔎 Searching authorized sources...")
-    update_user(
-        user.id,
-        {"videos_requested": int(data.get("videos_requested", 0)) + 1},
-    )
+    try:
+        messages, total = await client.get_video_messages(position, VIDEOS_PER_REQUEST)
+    except Exception as e:
+        latest = get_user(uid)
+        update_user(uid, {"failed_requests": int(latest.get("failed_requests", 0) or 0) + 1})
+        log_activity(uid, "request_failed", {"error": type(e).__name__})
+        await status.edit_text(t(uid, "scan_failed", error=type(e).__name__), parse_mode="HTML")
+        return
 
-    messages, total = await client.get_video_messages(
-        position,
-        VIDEOS_PER_REQUEST,
-    )
-
-    # User has reached the end: start the same source library again.
     if not messages and total > 0:
         position = 0
-        messages, total = await client.get_video_messages(
-            0,
-            VIDEOS_PER_REQUEST,
-        )
+        messages, total = await client.get_video_messages(0, VIDEOS_PER_REQUEST)
         if messages:
-            set_position(user.id, 0)
+            set_position(uid, 0)
 
     if not messages:
-        await update.message.reply_text(
-            "📭 Source channel me abhi koi video available nahi hai."
-        )
+        latest = get_user(uid)
+        update_user(uid, {"failed_requests": int(latest.get("failed_requests", 0) or 0) + 1})
+        log_activity(uid, "no_videos", {"total": total})
+        await status.edit_text(t(uid, "none"), parse_mode="HTML")
         return
 
     try:
-        # IMPORTANT: this uses Bot API copyMessage.
-        # The video itself is never downloaded by Render.
-        sent = await client.copy_messages_via_bot(
-            context.bot,
-            user.id,
-            messages,
-        )
+        sent = await client.copy_messages_via_bot(context.bot, uid, messages)
     except Exception as e:
-        update_user(
-            user.id,
-            {"failed_sends": int(data.get("failed_sends", 0)) + 1},
-        )
-        await update.message.reply_text(
-            f"⚠️ Videos send nahi ho paye: {type(e).__name__}: {e}"
-        )
+        latest = get_user(uid)
+        update_user(uid, {"failed_requests": int(latest.get("failed_requests", 0) or 0) + 1, "videos_failed": int(latest.get("videos_failed", 0) or 0) + len(messages)})
+        log_activity(uid, "copy_failed", {"error": type(e).__name__, "attempted": len(messages)})
+        await status.edit_text(t(uid, "failed", error=type(e).__name__), parse_mode="HTML")
         return
 
     if not sent:
-        update_user(
-            user.id,
-            {"failed_sends": int(data.get("failed_sends", 0)) + 1},
-        )
-        await update.message.reply_text("⚠️ Videos copy nahi ho paaye.")
+        latest = get_user(uid)
+        update_user(uid, {"failed_requests": int(latest.get("failed_requests", 0) or 0) + 1, "videos_failed": int(latest.get("videos_failed", 0) or 0) + len(messages)})
+        log_activity(uid, "copy_failed", {"attempted": len(messages), "sent": 0})
+        await status.edit_text(t(uid, "failed_simple"), parse_mode="HTML")
         return
 
-    # Advance only by successfully copied messages.
     new_position = position + len(sent)
-
-    # At the end, the next click will automatically wrap to position 0.
-    set_position(user.id, new_position)
-
-    latest = get_user(user.id)
-    update_user(
-        user.id,
-        {"videos_sent": int(latest.get("videos_sent", 0)) + len(sent)},
-    )
-
-    # Keep the existing auto-delete feature for bot-side copies.
+    if new_position >= total:
+        new_position = 0
+    set_position(uid, new_position)
+    latest = get_user(uid)
+    cooldown_until = datetime.now(timezone.utc) + timedelta(minutes=VIDEO_COOLDOWN_MINUTES)
+    update_user(uid, {
+        "videos_sent": int(latest.get("videos_sent", 0) or 0) + len(sent),
+        "videos_failed": int(latest.get("videos_failed", 0) or 0) + max(0, len(messages) - len(sent)),
+        "successful_requests": int(latest.get("successful_requests", 0) or 0) + 1,
+        "total_batches": int(latest.get("total_batches", 0) or 0) + 1,
+        "last_video_sent_at": datetime.now(timezone.utc).isoformat(),
+        "cooldown_until": cooldown_until.isoformat(),
+    })
+    log_activity(uid, "video_batch_sent", {"sent": len(sent), "attempted": len(messages), "total_available": total, "next_position": new_position, "cooldown_until": cooldown_until.isoformat()})
     delete_at = datetime.now(timezone.utc) + timedelta(hours=AUTO_DELETE_HOURS)
     for copied in sent:
-        destination_message_id = getattr(copied, "message_id", None)
-        if destination_message_id:
-            add_cleanup(
-                user.id,
-                destination_message_id,
-                destination_message_id,
-                delete_at.isoformat(),
-            )
+        mid = getattr(copied, "message_id", None)
+        if mid:
+            add_cleanup(uid, uid, mid, delete_at.isoformat())
 
-    next_text = (
-        "🔁 Next click par sequence beginning se chalega."
-        if new_position >= total
-        else f"📌 Next batch position: {new_position + 1}–{min(new_position + VIDEOS_PER_REQUEST, total)}"
-    )
-
-    await update.message.reply_text(
-        f"✅ <b>{len(sent)} videos sent</b>\n"
-        f"{next_text}\n"
-        f"🗑️ Ye copies {AUTO_DELETE_HOURS} hours baad delete hongi.",
-        parse_mode="HTML",
-    )
+    await status.edit_text(t(uid, "sent_status", count=len(sent), cooldown=VIDEO_COOLDOWN_MINUTES, hours=AUTO_DELETE_HOURS), parse_mode="HTML")
 
 
 async def auto_delete_worker(app):
@@ -136,23 +144,17 @@ async def auto_delete_worker(app):
         try:
             pending = get_pending_deletions()
             now = datetime.now(timezone.utc)
-
             for uid, items in pending.items():
                 if not isinstance(items, dict):
                     continue
-
                 for mid, item in list(items.items()):
                     try:
                         delete_at = datetime.fromisoformat(item["delete_at"])
                         if delete_at <= now:
-                            await app.bot.delete_message(
-                                chat_id=int(uid),
-                                message_id=int(item["message_id"]),
-                            )
+                            await app.bot.delete_message(chat_id=int(uid), message_id=int(item["message_id"]))
                             remove_cleanup(uid, mid)
                     except Exception:
                         remove_cleanup(uid, mid)
         except Exception as e:
             print("cleanup:", e)
-
         await asyncio.sleep(60)
