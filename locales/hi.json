@@ -18,5 +18,11 @@
   "help": "🎬 Video File — हर request पर 5 वीडियो भेजता है।\n🔢 हर user का sequence अलग होता है।\n🗑️ भेजी गई copies निर्धारित समय बाद अपने आप delete होती हैं।",
   "failed": "⚠️ Videos could not be sent.",
   "video_button": "🎬 Video File",
-  "help_button": "ℹ️ Help"
+  "help_button": "ℹ️ Help",
+  "agree_note": "By pressing Agree, you confirm that you accept these terms and want to continue.",
+  "menu_ready": "Choose an option from the menu below.",
+  "cooldown": "⏳ <b>Cooldown active</b>\n\nNext video request will be available in {minutes}m {seconds}s.",
+  "scan_failed": "⚠️ Source scan failed: {error}",
+  "failed_simple": "⚠️ Videos could not be copied.",
+  "sent_status": "✅ <b>{count} videos sent</b>\n⏱️ Next request in {cooldown} minutes.\n🗑️ Copies will be deleted after {hours} hours."
 }
