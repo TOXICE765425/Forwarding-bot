@@ -6,8 +6,35 @@ from telegram.ext import ContextTypes
 
 from config import OWNER_IDS, ACTIVE_USER_DAYS, VIDEOS_PER_REQUEST, AUTO_DELETE_HOURS, VIDEO_COOLDOWN_MINUTES
 from firebase import (
-    get_sources, stats, get_all_users, get_user, get_activity,
+    get_sources, stats, get_all_users, get_user, get_activity, get_bot_enabled, set_bot_enabled,
 )
+
+async def bot_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.effective_user or not is_owner(update.effective_user.id):
+        return
+    uid = update.effective_user.id
+    args = [a.lower() for a in (context.args or [])]
+    if not args or args[0] not in {"on", "off", "status"}:
+        state = "ON" if get_bot_enabled() else "OFF"
+        await update.message.reply_text(
+            f"🤖 <b>Video Parsing: {state}</b>\n\n"
+            "Use <code>/bot on</code> to enable video parsing.\n"
+            "Use <code>/bot off</code> to pause video parsing.\n"
+            "Use <code>/bot status</code> to check current status.", parse_mode="HTML"
+        )
+        return
+    action = args[0]
+    if action == "status":
+        state = "ON" if get_bot_enabled() else "OFF"
+        await update.message.reply_text(f"🤖 <b>Video Parsing: {state}</b>", parse_mode="HTML")
+        return
+    enabled = action == "on"
+    set_bot_enabled(enabled)
+    await update.message.reply_text(
+        "✅ <b>Video Parsing ON</b>\nUsers can request videos now." if enabled else
+        "⛔ <b>Video Parsing OFF</b>\nUsers will receive the localized pause message instead of videos.",
+        parse_mode="HTML"
+    )
 
 def is_owner(uid):
     return uid in OWNER_IDS
@@ -38,7 +65,10 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         "🏠 <b>ADMIN PANEL</b>\n"
         "<code>/admin</code> — Admin Panel open kare.\n"
-        "<code>/help</code> — Ye complete admin command guide dikhaye.\n\n"
+        "<code>/help</code> — Ye complete admin command guide dikhaye.\n\n"        "🤖 <b>VIDEO PARSING CONTROL</b>\n"
+        "<code>/bot on</code> — Video parsing ON kare.\n"
+        "<code>/bot off</code> — Video parsing OFF kare; users ko localized pause message milega.\n"
+        "<code>/bot status</code> — Current parsing status dekhe.\n\n"
 
         "📊 <b>STATISTICS</b>\n"
         "<code>/stats</code> — Total users, active users, requests, batches, delivered videos, failures, sources aur broadcast statistics.\n"

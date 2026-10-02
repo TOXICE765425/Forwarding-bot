@@ -2,8 +2,8 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 from telegram import Update
 from telegram.ext import ContextTypes
-from firebase import ensure_user, get_user, update_user, set_position, get_pending_deletions, add_cleanup, remove_cleanup, log_activity
-from config import VIDEOS_PER_REQUEST, AUTO_DELETE_HOURS, VIDEO_COOLDOWN_MINUTES
+from firebase import ensure_user, get_user, update_user, set_position, get_pending_deletions, add_cleanup, remove_cleanup, log_activity, get_bot_enabled
+from config import VIDEOS_PER_REQUEST, AUTO_DELETE_HOURS, VIDEO_COOLDOWN_MINUTES, OWNER_IDS
 from utils.i18n import t, language
 
 
@@ -63,7 +63,12 @@ async def video_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(t(uid, "select_agree"))
         return
 
-    remaining = _remaining(data.get("cooldown_until", ""))
+    if not get_bot_enabled():
+        await update.message.reply_text(t(uid, "video_paused"), parse_mode="HTML")
+        log_activity(uid, "video_blocked_bot_off")
+        return
+
+    remaining = 0 if uid in OWNER_IDS else _remaining(data.get("cooldown_until", ""))
     if remaining > 0:
         minutes, seconds = divmod(remaining, 60)
         await update.message.reply_text(t(uid, "cooldown", minutes=minutes, seconds=seconds), parse_mode="HTML")
@@ -120,16 +125,16 @@ async def video_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         new_position = 0
     set_position(uid, new_position)
     latest = get_user(uid)
-    cooldown_until = datetime.now(timezone.utc) + timedelta(minutes=VIDEO_COOLDOWN_MINUTES)
+    cooldown_until = "" if uid in OWNER_IDS else (datetime.now(timezone.utc) + timedelta(minutes=VIDEO_COOLDOWN_MINUTES)).isoformat()
     update_user(uid, {
         "videos_sent": int(latest.get("videos_sent", 0) or 0) + len(sent),
         "videos_failed": int(latest.get("videos_failed", 0) or 0) + max(0, len(messages) - len(sent)),
         "successful_requests": int(latest.get("successful_requests", 0) or 0) + 1,
         "total_batches": int(latest.get("total_batches", 0) or 0) + 1,
         "last_video_sent_at": datetime.now(timezone.utc).isoformat(),
-        "cooldown_until": cooldown_until.isoformat(),
+        "cooldown_until": cooldown_until,
     })
-    log_activity(uid, "video_batch_sent", {"sent": len(sent), "attempted": len(messages), "total_available": total, "next_position": new_position, "cooldown_until": cooldown_until.isoformat()})
+    log_activity(uid, "video_batch_sent", {"sent": len(sent), "attempted": len(messages), "total_available": total, "next_position": new_position, "cooldown_until": cooldown_until})
     delete_at = datetime.now(timezone.utc) + timedelta(hours=AUTO_DELETE_HOURS)
     for copied in sent:
         mid = getattr(copied, "message_id", None)

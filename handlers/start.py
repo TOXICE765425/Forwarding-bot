@@ -97,9 +97,8 @@ async def start_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     data = ensure_user(user)
     uid = user.id
-    if data.get("consent") == "agree":
-        await _send_welcome(context, user, uid)
-        return
+    # Every /start requires a fresh consent. Video access remains blocked until Agree is pressed.
+    update_user(uid, {"consent": "pending"})
     await update.message.reply_text(terms(uid), parse_mode="HTML", reply_markup=consent_keyboard(uid))
 
 
