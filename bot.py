@@ -27,6 +27,7 @@ from handlers.user import (
 )
 
 from handlers.admin import (
+    bot_command,
     admin_command,
     admin_callback,
     stats_command,
@@ -136,6 +137,10 @@ async def main():
 
     app.add_handler(
         CommandHandler("admin", admin_command)
+    )
+
+    app.add_handler(
+        CommandHandler("bot", bot_command)
     )
 
     app.add_handler(

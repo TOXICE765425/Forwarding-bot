@@ -139,6 +139,18 @@ def record_broadcast(total, success, failed, kind="broadcast"):
     ref("stats/broadcasts_failed").transaction(lambda x: int(x or 0) + int(failed))
     return r.key
 
+
+def get_bot_enabled():
+    value = ref("settings/video_parsing_enabled").get()
+    if value is None:
+        ref("settings/video_parsing_enabled").set(True)
+        return True
+    return bool(value)
+
+def set_bot_enabled(enabled):
+    ref("settings/video_parsing_enabled").set(bool(enabled))
+    return bool(enabled)
+
 def stats():
     users = get_all_users()
     sources = get_sources()
