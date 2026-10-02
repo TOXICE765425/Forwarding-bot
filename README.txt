@@ -1,109 +1,99 @@
-# Forwarding Bot — Complete Firebase + CopyMessage Edition
+FORWARDING BOT
+==============================
 
-This bot distributes authorized videos from configured Telegram sources.
+Premium Telegram Video Parsing & Forwarding System
 
-## Main features
+Developer: Toxice Hacker
 
-### User
-- `/start` consent + language flow
-- `🎬 Video File` sends up to 5 videos per successful request
-- 10-minute per-user cooldown after a successful video batch
-- Sequence wraps back to the beginning after the last available video
-- Firebase permanently stores user profile, counters, position and cooldown
-- Sent copies are automatically deleted after `AUTO_DELETE_HOURS`
-- Bot API `copyMessage` is used, so Render does not download the video file
-- `protect_content=True` is enabled for copied videos
+CORE FEATURES
+-------------
+[+] 5 videos per normal user request
+[+] 10-minute cooldown for normal users
+[+] Owner cooldown bypass
+[+] Persistent user position/progress
+[+] Firebase user/activity persistence
+[+] Terms & Consent system
+[+] Multi-language support
+[+] Bhojpuri language support
+[+] Profile-photo welcome
+[+] Video Parsing ON/OFF
+[+] Admin Panel
+[+] Detailed /help
+[+] Statistics
+[+] User management
+[+] User activity
+[+] Broadcast
+[+] Source management
+[+] Auto-delete
+[+] Protected content
+[+] Render ready
+[+] Docker ready
 
-### Owner commands
+ADMIN COMMANDS
+--------------
+/admin
+/help
+/stats
+/user
+/activity USER_ID
+/bots
+/broadcast
+/broadcast bot
 
-- `/admin` — owner panel
-- `/stats` — complete bot statistics
-- `/user` — Firebase user list, `/user 2` for next page
-- `/activity USER_ID` — detailed user activity and counters
-- `/bots` — compact statistics alias
-- `/broadcast` — reply to a message and broadcast it
-- `/broadcast bot` — alias for broadcast
-- `/broadcast Your text` — text broadcast
-- `/source add <chat_id> <title>`
-- `/source remove <chat_id>`
-- `/source list`
+SOURCE COMMANDS
+---------------
+/source add CHAT_ID TITLE
+/source remove CHAT_ID
+/source list
 
-## Statistics
+VIDEO PARSING CONTROL
+---------------------
+/bot on
+/bot off
+/bot status
 
-Firebase tracks:
-- total users
-- active users (activity within `ACTIVE_USER_DAYS`)
-- total video requests
-- successful batches
-- failed requests
-- videos delivered
-- video failures
-- source count / enabled source count
-- broadcast runs
-- broadcast success/failure
+VIDEO FLOW
+----------
+User
+  |
+  v
+Terms & Consent
+  |
+  v
+Video File
+  |
+  +-- Bot OFF -> localized status message
+  |
+  +-- Bot ON
+        |
+        v
+     Search sources
+        |
+        v
+     Copy 5 videos
+        |
+        v
+     Save progress
 
-Per-user activity also records recent events under `activity/<user_id>`.
+LANGUAGES
+---------
+Hindi, Bhojpuri, English, Bengali, Telugu, Marathi, Tamil,
+Gujarati, Urdu, Kannada, Malayalam, Punjabi, Assamese, Maithili,
+Sanskrit, Nepali, Konkani, Sindhi, Dogri, Kashmiri, Manipuri,
+Bodo, Santali, Odia, Russian, Chinese, Japanese, Spanish, French,
+German, Portuguese, Arabic, Turkish, Indonesian, Vietnamese,
+Korean, Italian, Dutch, Polish, Ukrainian, Persian and Thai.
 
-## Firebase structure
+IMPORTANT
+---------
+- Admin commands are owner-only.
+- Normal users have the cooldown; the owner bypasses it.
+- Users must accept Terms before using the video feature.
+- When parsing is OFF, users receive a localized status message
+  instead of videos.
+- Video media can be copied through Telegram without server-side
+  video downloading.
 
-```text
-users/
-sources/
-cleanup/
-activity/
-stats/
-broadcasts/
-```
-
-No video files are stored in Firebase.
-
-## 10-minute cooldown
-
-The cooldown is stored as an ISO timestamp in:
-
-```text
-users/<USER_ID>/cooldown_until
-```
-
-If the user presses `🎬 Video File` before the timestamp, no new videos are sent.
-
-## Important Telegram requirement
-
-The Telegram Bot must have access to every configured source channel/chat. The Telethon account must also be legitimately authorized to read the source history.
-
-`copyMessage` copies the Telegram message server-side; the Render process does not download the media.
-
-Content protection can restrict Telegram forwarding/saving controls, but it cannot technically prevent screenshots or external recording.
-
-## Environment
-
-Required:
-- `BOT_TOKEN`
-- `OWNER_IDS`
-- `API_ID`
-- `API_HASH`
-- `SESSION_BASE64` or first-login `PHONE_NUMBER`
-- `FIREBASE_DATABASE_URL`
-- `FIREBASE_CREDENTIALS_JSON`
-
-Recommended:
-- `VIDEOS_PER_REQUEST=5`
-- `VIDEO_COOLDOWN_MINUTES=10`
-- `AUTO_DELETE_HOURS=2`
-- `ACTIVE_USER_DAYS=30`
-
-## Deployment
-
-Install:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run:
-
-```bash
-python bot.py
-```
-
-Never commit Telegram session files or Firebase service-account credentials.
+DEVELOPER
+---------
+Toxice Hacker
