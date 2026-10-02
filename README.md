@@ -1,458 +1,194 @@
 <div align="center">
 
-# ╭─「 🧊 TOXICE HACKER 」─╮
-# 🎬 FORWARDING BOT
-### `Premium Glass • Telegram Video Parser • Admin Control`
+<img src="banner.png" alt="Forwarding Bot Premium Banner" width="100%">
 
-<p>
-  <img src="https://img.shields.io/badge/⚡_STATUS-ONLINE-00f5d4?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/🎬_PARSER-ACTIVE-7c3aed?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/🧊_UI-GLASS-06b6d4?style=for-the-badge" />
-</p>
+# ✦ Forwarding Bot
 
-```text
-╔══════════════════════════════════════════════════════╗
-║                                                      ║
-║        ████████╗ ██████╗ ██╗  ██╗██╗ ██████╗        ║
-║        ╚══██╔══╝██╔═══██╗╚██╗██╔╝██║██╔════╝        ║
-║           ██║   ██║   ██║ ╚███╔╝ ██║██║             ║
-║           ██║   ██║   ██║ ██╔██╗ ██║██║             ║
-║           ██║   ╚██████╔╝██╔╝ ██╗██║╚██████╗        ║
-║           ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝        ║
-║                                                      ║
-║        🎬 VIDEO PARSING  •  👑 ADMIN CONTROL         ║
-║        💾 FIREBASE       •  🌐 MULTI-LANGUAGE        ║
-║                                                      ║
-╚══════════════════════════════════════════════════════╝
-```
+### `Modern • Fast • Secure • Multi-Language`
 
-**Developer — `Toxice Hacker`**
+**Developed by Toxice Hacker**
 
 </div>
 
 ---
 
-## 🫧 ◈ GLASS CONTROL DECK
+## 🧊 Premium UI
 
-> **A premium Telegram video-forwarding system with persistent state, source management, cooldown control, multilingual UI and owner controls.**
+> Modern glassmorphism interface with soft shadows, blur effects, smooth visual styling and a clean Telegram-focused experience.
 
-<table>
-<tr>
-<td width="50%" align="center">
+<div align="center">
 
-### 🎬 VIDEO ENGINE
+`🎬 Video Parsing`　`👑 Admin Control`　`🌐 Multi-Language`　`💾 Firebase`
 
-```text
-┌─────────────────────────┐
-│  ◉ PARSER              │
-│                         │
-│  🔎 Scan Sources        │
-│  📦 Pick 5 Videos       │
-│  📤 Copy to User       │
-│  💾 Save Progress       │
-└─────────────────────────┘
-```
-
-</td>
-<td width="50%" align="center">
-
-### 👑 OWNER CORE
-
-```text
-┌─────────────────────────┐
-│  ◉ ADMIN               │
-│                         │
-│  📊 Statistics          │
-│  👥 Users               │
-│  📢 Broadcast           │
-│  🎛️ Parser ON / OFF     │
-└─────────────────────────┘
-```
-
-</td>
-</tr>
-</table>
+</div>
 
 ---
 
-# 🌌 LIVE PARSING VISUAL
+## 🎬 User Features
 
-```text
-╭──────────────────────────────────────────────────────╮
-│                                                      │
-│              ◉  PARSER PIPELINE                     │
-│                                                      │
-│   [01]  CONNECT       ████████████████░░  90%       │
-│          ↓                                           │
-│   [02]  SCAN          ██████████████████  100%      │
-│          ↓                                           │
-│   [03]  FILTER        ███████████████░░░  80%       │
-│          ↓                                           │
-│   [04]  COPY          ██████████████████  100%      │
-│          ↓                                           │
-│   [05]  SAVE          ██████████████████  100%      │
-│                                                      │
-│             ✦ VIDEO PARSING READY ✦                │
-╰──────────────────────────────────────────────────────╯
-```
-
-<details>
-<summary><b>🎞️ ▶ Watch the parser flow</b></summary>
-
-```text
-      🔵
-      │
-      ▼
-┌──────────────┐
-│ 🎬 REQUEST   │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ 🔎 SEARCH    │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ 📦 5 VIDEOS  │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ 📤 TELEGRAM  │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ 💾 PROGRESS  │
-└──────────────┘
-```
-
-</details>
+| Feature | Details |
+|---|---|
+| 🎬 **Video File** | Request videos from configured sources |
+| 📦 **5 Videos** | 5 videos per normal request |
+| ⏱️ **Cooldown** | 10-minute cooldown for normal users |
+| 👑 **Owner Access** | Owner has no cooldown |
+| 📜 **Terms & Conditions** | User must agree before using the video feature |
+| 🔄 **Progress** | User video position is saved |
+| 🌐 **Language** | Selectable multi-language interface |
+| 🇮🇳 **Bhojpuri** | Supported |
+| 🧹 **Auto Delete** | Automatic cleanup when configured |
+| 🛡️ **Protected Content** | Protected sending mode supported |
 
 ---
 
-# 🧊 ◈ FEATURE GLASS WALL
+## 👑 Admin Commands
 
-<table>
-<tr>
-<td>
+```text
+/admin
+```
+Open the premium Admin Panel.
 
-### 🎬 MEDIA
+```text
+/help
+```
+Show the complete admin command guide.
 
-- `5` videos per normal request
-- `10 min` normal-user cooldown
-- 👑 Owner cooldown bypass
-- 🔄 Saved position
-- 📤 Telegram copy flow
-- 🛡️ Protected content
-- 🧹 Auto-delete
+```text
+/stats
+```
+View users, requests, videos, sources and bot statistics.
 
-</td>
-<td>
+```text
+/user
+```
+View registered users.
 
-### 💾 PERSISTENCE
+```text
+/activity USER_ID
+```
+View activity and request information for a specific user.
 
-- Firebase user database
-- Activity history
-- Request counters
-- Video counters
+```text
+/bots
+```
+View bot information.
+
+---
+
+## 📢 Broadcast
+
+```text
+/broadcast
+```
+Broadcast a replied message to registered users.
+
+```text
+/broadcast bot
+```
+Broadcast using the bot broadcast command.
+
+---
+
+## 📂 Source Management
+
+```text
+/source add CHAT_ID TITLE
+```
+Add a video source.
+
+```text
+/source remove CHAT_ID
+```
+Remove a source.
+
+```text
+/source list
+```
+View configured sources.
+
+---
+
+## 🎛️ Video Parsing Control
+
+```text
+/bot on
+```
+Enable Video Parsing.
+
+```text
+/bot off
+```
+Disable Video Parsing.
+
+```text
+/bot status
+```
+Check the current Video Parsing status.
+
+### 🔴 When Video Parsing is OFF
+
+Users receive **no videos**.  
+They receive a localized message explaining that the owner has stopped Video Parsing and that it needs to be enabled again.
+
+---
+
+## 🌐 Languages
+
+The bot supports a broad selection of languages, including:
+
+**Hindi • Bhojpuri • English • Bengali • Telugu • Marathi • Tamil • Gujarati • Urdu • Kannada • Malayalam • Punjabi • Assamese • Maithili • Sanskrit • Nepali • Konkani • Sindhi • Dogri • Kashmiri • Manipuri • Bodo • Santali • Odia • Russian • Chinese • Japanese • Spanish • French • German • Portuguese • Arabic • Turkish • Indonesian • Vietnamese • Korean • Italian • Dutch • Polish • Ukrainian • Persian • Thai**
+
+User-facing status and system messages follow the selected language where translations are available.
+
+---
+
+## 💾 Data & Persistence
+
+- Firebase user data
+- User consent
+- Selected language
+- Request statistics
+- Video statistics
+- Saved video position
 - Cooldown state
-- Parsing ON/OFF state
+- Activity history
 - Source configuration
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🌐 LANGUAGE
-
-- 🇮🇳 Hindi
-- 🥭 Bhojpuri
-- 🇬🇧 English
-- 🇧🇩 Bengali
-- 🇮🇳 Telugu
-- 🇮🇳 Marathi
-- 🇮🇳 Tamil
-- 🇮🇳 Gujarati
-- 🇮🇳 Urdu
-- 🇮🇳 Kannada
-- 🇮🇳 Malayalam
-- 🇮🇳 Punjabi
-- + many more
-
-</td>
-<td>
-
-### 👑 ADMIN
-
-- `/admin`
-- `/help`
-- `/stats`
-- `/user`
-- `/activity USER_ID`
-- `/bots`
-- `/broadcast`
-- `/source ...`
-- `/bot on`
-- `/bot off`
-- `/bot status`
-
-</td>
-</tr>
-</table>
+- Broadcast statistics
+- Video Parsing ON/OFF state
 
 ---
 
-# 🔥 ◈ COMMAND CONSOLE
-
-### 👑 ADMIN PANEL
+## ⚡ Quick Feature Summary
 
 ```text
-╭─────────────────────────────────────────────╮
-│                 👑 ADMIN PANEL              │
-├─────────────────────────────────────────────┤
-│                                             │
-│  📊 /stats              → Statistics        │
-│  👥 /user               → User List         │
-│  🔎 /activity ID        → User Activity     │
-│  🤖 /bots               → Bot Info          │
-│  📖 /help               → Full Guide        │
-│                                             │
-│  📢 /broadcast           → Broadcast         │
-│  📢 /broadcast bot       → Broadcast Alias   │
-│                                             │
-│  📂 /source add ID NAME → Add Source        │
-│  🗑️ /source remove ID   → Remove Source     │
-│  📋 /source list        → Source List       │
-│                                             │
-│  🟢 /bot on             → Parser ON         │
-│  🔴 /bot off            → Parser OFF        │
-│  ℹ️ /bot status          → Parser Status     │
-│                                             │
-╰─────────────────────────────────────────────╯
-```
-
----
-
-# 🔴 ◈ PARSER SWITCH
-
-### 🟢 ON
-
-```text
-╭────────────────────────────╮
-│ 🟢 VIDEO PARSING: ON      │
-│                            │
-│ User request              │
-│       ↓                    │
-│ 🔎 Search                 │
-│       ↓                    │
-│ 🎬 Send Videos            │
-╰────────────────────────────╯
-```
-
-### 🔴 OFF
-
-```text
-╭────────────────────────────╮
-│ 🔴 VIDEO PARSING: OFF     │
-│                            │
-│ User request              │
-│       ↓                    │
-│ 🚫 No Video               │
-│       ↓                    │
-│ 🌐 Localized Status       │
-│       ↓                    │
-│ "Owner stopped parsing"   │
-╰────────────────────────────╯
-```
-
----
-
-# ⏱️ ◈ COOLDOWN MATRIX
-
-| Account | Cooldown | Video Access |
-|---|---:|---|
-| 👤 Normal User | `10 minutes` | `5 videos/request` |
-| 👑 Owner | `No cooldown` | `5 videos/request` |
-
-```text
-USER
-  │
-  ├── Request #1 ──► 🎬 5 Videos
-  │
-  ├── Immediate Request ──► ⏳ Cooldown
-  │
-  └── After 10 Minutes ──► 🎬 Next 5 Videos
-
-OWNER
-  │
-  ├── Request #1 ──► 🎬
-  ├── Request #2 ──► 🎬
-  ├── Request #3 ──► 🎬
-  └── ... no cooldown
-```
-
----
-
-# 📜 ◈ CONSENT GATE
-
-```text
-╭──────────────────────────────────────────╮
-│              📜 TERMS GATE               │
-├──────────────────────────────────────────┤
-│                                          │
-│       USER STARTS BOT                    │
-│              ↓                           │
-│       📜 TERMS & CONDITIONS              │
-│              ↓                           │
-│       ┌──────────┬──────────┐             │
-│       │ ❌ DISAGREE│ ✅ AGREE │             │
-│       └──────────┴──────────┘             │
-│                    ↓                     │
-│             🎬 VIDEO ACCESS              │
-│                                          │
-╰──────────────────────────────────────────╯
-```
-
----
-
-# 🌍 ◈ LANGUAGE CLOUD
-
-```text
-┌──────────────────────────────────────────────────────┐
-│                                                      │
-│  🇮🇳 HI  •  🥭 BHO  •  🇬🇧 EN  •  🇧🇩 BN            │
-│  🇮🇳 TE  •  🇮🇳 MR   •  🇮🇳 TA  •  🇮🇳 GU            │
-│  🇮🇳 UR  •  🇮🇳 KN   •  🇮🇳 ML  •  🇮🇳 PA            │
-│  🇮🇳 AS  •  🇮🇳 MAI  •  🇮🇳 SA  •  🇳🇵 NE            │
-│  🇷🇺 RU  •  🇨🇳 ZH   •  🇯🇵 JA  •  🇪🇸 ES            │
-│  🇫🇷 FR  •  🇩🇪 DE   •  🇵🇹 PT  •  🇸🇦 AR            │
-│  🇹🇷 TR  •  🇮🇩 ID   •  🇻🇳 VI  •  🇰🇷 KO            │
-│  🇮🇹 IT  •  🇳🇱 NL   •  🇵🇱 PL  •  🇺🇦 UK            │
-│  🇮🇷 FA  •  🇹🇭 TH   •  + more                    │
-│                                                      │
-└──────────────────────────────────────────────────────┘
-```
-
----
-
-# 🛡️ ◈ SECURITY / ACCESS
-
-```text
-╭──────────────────────────────────────────╮
-│ 🔐 OWNER ONLY                            │
-│                                          │
-│ /admin                                   │
-│ /stats                                   │
-│ /user                                    │
-│ /activity                                │
-│ /broadcast                               │
-│ /source                                  │
-│ /bot on / off / status                   │
-│                                          │
-│ All administrative controls are guarded. │
-╰──────────────────────────────────────────╯
-```
-
----
-
-# 🚀 ◈ DEPLOYMENT
-
-```text
-          ┌───────────────┐
-          │   GITHUB      │
-          └───────┬───────┘
-                  │
-                  ▼
-          ┌───────────────┐
-          │    RENDER     │
-          └───────┬───────┘
-                  │
-                  ▼
-          ┌───────────────┐
-          │ TELEGRAM BOT  │
-          └───────┬───────┘
-                  │
-                  ▼
-          ┌───────────────┐
-          │   FIREBASE    │
-          └───────────────┘
-```
-
-### ⚙️ Deployment checklist
-
-```text
-[✓] Push project to GitHub
-[✓] Keep existing Render environment variables
-[✓] Deploy latest commit
-[✓] Check bot logs
-[✓] Open Telegram
-[✓] /start
-[✓] Accept Terms
-[✓] Test 🎬 Video File
-```
-
----
-
-# 🧬 ◈ SYSTEM MAP
-
-```text
-                    ╭──────────────╮
-                    │ 👑 OWNER     │
-                    ╰──────┬───────╯
-                           │
-                 ┌─────────▼─────────┐
-                 │   ADMIN CONTROL   │
-                 └─────────┬─────────┘
-                           │
-          ┌────────────────┼────────────────┐
-          ▼                ▼                ▼
-      📊 STATS         📢 BROADCAST      🎛️ PARSER
-                                           │
-                                     ┌─────┴─────┐
-                                     ▼           ▼
-                                   🟢 ON       🔴 OFF
-                                     │           │
-                                     ▼           ▼
-                                   🎬 VIDEO    🚫 STATUS
-                                     │
-                                     ▼
-                                💾 FIREBASE
-
-                    👤 USER
-                       │
-                       ▼
-                 📜 TERMS GATE
-                       │
-                       ▼
-                 🎬 VIDEO FILE
-                       │
-                       ▼
-                  🔎 SOURCES
-                       │
-                       ▼
-                  📦 5 VIDEOS
-                       │
-                       ▼
-                  📤 TELEGRAM
+🎬 5 Videos / Normal Request
+⏱️ 10-Minute User Cooldown
+👑 No Cooldown for Owner
+📜 Terms Required Before Video Access
+🔴 Video Parsing ON / OFF
+🌐 Multi-Language
+🇮🇳 Bhojpuri
+👤 Profile Welcome
+💾 Firebase Persistence
+📊 Statistics
+👥 User Management
+🔎 Activity Tracking
+📢 Broadcast
+📂 Source Management
+🧹 Auto Delete
+🛡️ Protected Content
+🚀 Render Ready
+🐳 Docker Ready
 ```
 
 ---
 
 <div align="center">
 
-# 🧊 `TOXICE HACKER`
+### 🧊 Toxice Hacker
 
-### 🎬 Video Parsing • 👑 Admin Control • 🌐 Multi-Language
+`Premium Telegram Bot Interface`
 
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        PREMIUM TELEGRAM BOT SYSTEM
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Developed by `Toxice Hacker`**
+**Fast • Clean • Modern • Glassmorphism**
 
 </div>
