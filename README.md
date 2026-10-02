@@ -14,7 +14,7 @@
 
 ## 🧊 Premium UI
 
-> Modern glassmorphism interface with soft shadows, blur effects, smooth visual styling and a clean Telegram-focused experience.
+
 
 <div align="center">
 
