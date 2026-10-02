@@ -24,5 +24,6 @@
   "cooldown": "⏳ Wartezeit aktiv\n\nNächste Anfrage in {minutes}m {seconds}s.",
   "scan_failed": "⚠️ Quellensuche fehlgeschlagen: {error}",
   "failed_simple": "⚠️ Videos konnten nicht kopiert werden.",
-  "sent_status": "✅ <b>{count} Videos gesendet</b>\n⏱️ Nächste Anfrage in {cooldown} Minuten.\n🗑️ Kopien werden nach {hours} Stunden gelöscht."
+  "sent_status": "✅ <b>{count} Videos gesendet</b>\n⏱️ Nächste Anfrage in {cooldown} Minuten.\n🗑️ Kopien werden nach {hours} Stunden gelöscht.",
+  "video_paused": "⛔ <b>Der Bot-Besitzer hat die Videoverarbeitung pausiert.</b>\nWarte, bis sie wieder aktiviert wird."
 }

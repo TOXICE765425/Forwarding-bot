@@ -24,5 +24,6 @@
   "cooldown": "⏳ 冷却中\n\n下一次请求将在 {minutes}分 {seconds}秒 后可用。",
   "scan_failed": "⚠️ 搜索来源失败：{error}",
   "failed_simple": "⚠️ 无法复制视频。",
-  "sent_status": "✅ <b>已发送 {count} 个视频</b>\n⏱️ 下一次请求将在 {cooldown} 分钟后。\n🗑️ 副本将在 {hours} 小时后删除。"
+  "sent_status": "✅ <b>已发送 {count} 个视频</b>\n⏱️ 下一次请求将在 {cooldown} 分钟后。\n🗑️ 副本将在 {hours} 小时后删除。",
+  "video_paused": "⛔ <b>机器人所有者已暂停视频解析。</b>\n请等待所有者重新开启。"
 }

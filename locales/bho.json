@@ -24,5 +24,6 @@
   "cooldown": "⏳ <b>Cooldown चालू बा</b>\n\nअगिला video request {minutes}m {seconds}s बाद उपलब्ध होई।",
   "scan_failed": "⚠️ Source scan fail हो गइल: {error}",
   "failed_simple": "⚠️ वीडियो copy ना हो सकल।",
-  "sent_status": "✅ <b>{count} वीडियो भेजल गइल</b>\n⏱️ अगिला request {cooldown} मिनट बाद।\n🗑️ Copies {hours} घंटा बाद delete हो जाई।"
+  "sent_status": "✅ <b>{count} वीडियो भेजल गइल</b>\n⏱️ अगिला request {cooldown} मिनट बाद।\n🗑️ Copies {hours} घंटा बाद delete हो जाई।",
+  "video_paused": "⛔ <b>Bot owner Video Parsing रोक देले बा।</b>\nOwner के फेर से ON करे तक इंतजार करीं।"
 }

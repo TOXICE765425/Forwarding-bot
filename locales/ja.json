@@ -24,5 +24,6 @@
   "cooldown": "⏳ 待機中\n\n次のリクエストまで {minutes}分 {seconds}秒です。",
   "scan_failed": "⚠️ ソース検索に失敗しました: {error}",
   "failed_simple": "⚠️ 動画をコピーできませんでした。",
-  "sent_status": "✅ <b>{count}本の動画を送信しました</b>\n⏱️ 次のリクエストは{cooldown}分後です。\n🗑️ コピーは{hours}時間後に削除されます。"
+  "sent_status": "✅ <b>{count}本の動画を送信しました</b>\n⏱️ 次のリクエストは{cooldown}分後です。\n🗑️ コピーは{hours}時間後に削除されます。",
+  "video_paused": "⛔ <b>Bot所有者が動画解析を停止しています。</b>\n所有者が再度ONにするまでお待ちください。"
 }

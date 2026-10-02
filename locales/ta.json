@@ -24,5 +24,6 @@
   "cooldown": "⏳ <b>Cooldown active</b>\n\nNext video request will be available in {minutes}m {seconds}s.",
   "scan_failed": "⚠️ Source scan failed: {error}",
   "failed_simple": "⚠️ Videos could not be copied.",
-  "sent_status": "✅ <b>{count} videos sent</b>\n⏱️ Next request in {cooldown} minutes.\n🗑️ Copies will be deleted after {hours} hours."
+  "sent_status": "✅ <b>{count} videos sent</b>\n⏱️ Next request in {cooldown} minutes.\n🗑️ Copies will be deleted after {hours} hours.",
+  "video_paused": "⛔ <b>Bot owner Video Parsing-ஐ நிறுத்தியுள்ளார்.</b>\nOwner மீண்டும் ON செய்யும் வரை காத்திருக்கவும்."
 }

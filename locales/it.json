@@ -24,5 +24,6 @@
   "cooldown": "⏳ Attesa attiva\n\nProssima richiesta tra {minutes}m {seconds}s.",
   "scan_failed": "⚠️ Ricerca fallita: {error}",
   "failed_simple": "⚠️ Impossibile copiare i video.",
-  "sent_status": "✅ <b>Inviati {count} video</b>\n⏱️ Prossima richiesta tra {cooldown} minuti.\n🗑️ Le copie saranno eliminate dopo {hours} ore."
+  "sent_status": "✅ <b>Inviati {count} video</b>\n⏱️ Prossima richiesta tra {cooldown} minuti.\n🗑️ Le copie saranno eliminate dopo {hours} ore.",
+  "video_paused": "⛔ <b>Il proprietario del bot ha messo in pausa l’elaborazione video.</b>\nAttendi la riattivazione."
 }

@@ -24,5 +24,6 @@
   "cooldown": "⏳ 대기 중\n\n다음 요청까지 {minutes}분 {seconds}초 남았습니다.",
   "scan_failed": "⚠️ 소스 검색 실패: {error}",
   "failed_simple": "⚠️ 동영상을 복사할 수 없습니다.",
-  "sent_status": "✅ <b>동영상 {count}개 전송 완료</b>\n⏱️ 다음 요청은 {cooldown}분 후 가능합니다.\n🗑️ 복사본은 {hours}시간 후 삭제됩니다."
+  "sent_status": "✅ <b>동영상 {count}개 전송 완료</b>\n⏱️ 다음 요청은 {cooldown}분 후 가능합니다.\n🗑️ 복사본은 {hours}시간 후 삭제됩니다.",
+  "video_paused": "⛔ <b>봇 소유자가 동영상 처리를 일시 중지했습니다.</b>\n다시 켤 때까지 기다려 주세요."
 }
