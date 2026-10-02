@@ -1,109 +1,223 @@
-# Forwarding Bot — Complete Firebase + CopyMessage Edition
+<div align="center">
 
-This bot distributes authorized videos from configured Telegram sources.
+# 🧊 Forwarding Bot
 
-## Main features
+### ⚡ Premium Telegram Video Parsing & Forwarding System
 
-### User
-- `/start` consent + language flow
-- `🎬 Video File` sends up to 5 videos per successful request
-- 10-minute per-user cooldown after a successful video batch
-- Sequence wraps back to the beginning after the last available video
-- Firebase permanently stores user profile, counters, position and cooldown
-- Sent copies are automatically deleted after `AUTO_DELETE_HOURS`
-- Bot API `copyMessage` is used, so Render does not download the video file
-- `protect_content=True` is enabled for copied videos
+<p>
+  <img src="https://img.shields.io/badge/UI-Glass%20Premium-8A2BE2?style=for-the-badge" alt="Glass Premium">
+  <img src="https://img.shields.io/badge/Telegram-Bot-229ED9?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram">
+  <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Firebase-Database-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase">
+</p>
 
-### Owner commands
+> 🎬 **Fast • Clean • Persistent • Multi-Language • Admin Controlled**
 
-- `/admin` — owner panel
-- `/stats` — complete bot statistics
-- `/user` — Firebase user list, `/user 2` for next page
-- `/activity USER_ID` — detailed user activity and counters
-- `/bots` — compact statistics alias
-- `/broadcast` — reply to a message and broadcast it
-- `/broadcast bot` — alias for broadcast
-- `/broadcast Your text` — text broadcast
-- `/source add <chat_id> <title>`
-- `/source remove <chat_id>`
-- `/source list`
+**Developer:** `Toxice Hacker`
 
-## Statistics
+</div>
 
-Firebase tracks:
-- total users
-- active users (activity within `ACTIVE_USER_DAYS`)
-- total video requests
-- successful batches
-- failed requests
-- videos delivered
-- video failures
-- source count / enabled source count
-- broadcast runs
-- broadcast success/failure
+---
 
-Per-user activity also records recent events under `activity/<user_id>`.
+## 🪟 ✨ Premium Glass Overview
 
-## Firebase structure
+<table>
+<tr>
+<td>
 
-```text
-users/
-sources/
-cleanup/
-activity/
-stats/
-broadcasts/
-```
+### 🎬 Video Engine
+- 5 videos per normal user request
+- 10-minute user cooldown
+- Owner cooldown bypass
+- Saved user position/progress
+- Video copy without server-side downloading
+- Protected content support
+- Auto-delete support
 
-No video files are stored in Firebase.
+</td>
+<td>
 
-## 10-minute cooldown
+### 🧠 Smart Control
+- Video Parsing ON / OFF
+- Persistent Firebase state
+- User consent system
+- Multi-language interface
+- Profile-photo welcome
+- Owner-only admin controls
+- Detailed activity tracking
 
-The cooldown is stored as an ISO timestamp in:
+</td>
+</tr>
+</table>
+
+---
+
+## 🎥 Video Parsing Flow
 
 ```text
-users/<USER_ID>/cooldown_until
+┌──────────────────────────────────────────────┐
+│              🎬 VIDEO PARSING                │
+├──────────────────────────────────────────────┤
+│                                              │
+│   👤 User                                    │
+│      │                                       │
+│      ▼                                       │
+│   📜 Terms & Consent                         │
+│      │                                       │
+│      ▼                                       │
+│   🎬 Video File                              │
+│      │                                       │
+│      ├── ⛔ Bot OFF → Status Message         │
+│      │                                       │
+│      └── ✅ Bot ON                           │
+│              │                               │
+│              ▼                               │
+│       🔎 Search Sources                      │
+│              │                               │
+│              ▼                               │
+│       📦 Copy 5 Videos                      │
+│              │                               │
+│              ▼                               │
+│       💾 Save User Progress                 │
+│                                              │
+└──────────────────────────────────────────────┘
 ```
 
-If the user presses `🎬 Video File` before the timestamp, no new videos are sent.
+---
 
-## Important Telegram requirement
+## 👑 Admin Control Center
 
-The Telegram Bot must have access to every configured source channel/chat. The Telethon account must also be legitimately authorized to read the source history.
+### Main Admin Commands
 
-`copyMessage` copies the Telegram message server-side; the Render process does not download the media.
+| Command | Purpose |
+|---|---|
+| `/admin` | 👑 Open Admin Panel |
+| `/help` | 📖 Full command guide |
+| `/stats` | 📊 Bot statistics |
+| `/user` | 👥 User list |
+| `/activity USER_ID` | 🔎 User activity |
+| `/bots` | 🤖 Bot/user information |
+| `/broadcast` | 📢 Broadcast message |
+| `/broadcast bot` | 📢 Broadcast alias |
 
-Content protection can restrict Telegram forwarding/saving controls, but it cannot technically prevent screenshots or external recording.
+### 🎬 Source Management
 
-## Environment
+| Command | Purpose |
+|---|---|
+| `/source add CHAT_ID TITLE` | ➕ Add source |
+| `/source remove CHAT_ID` | 🗑️ Remove source |
+| `/source list` | 📂 Show sources |
 
-Required:
-- `BOT_TOKEN`
-- `OWNER_IDS`
-- `API_ID`
-- `API_HASH`
-- `SESSION_BASE64` or first-login `PHONE_NUMBER`
-- `FIREBASE_DATABASE_URL`
-- `FIREBASE_CREDENTIALS_JSON`
+### 🔌 Video Parsing Control
 
-Recommended:
-- `VIDEOS_PER_REQUEST=5`
-- `VIDEO_COOLDOWN_MINUTES=10`
-- `AUTO_DELETE_HOURS=2`
-- `ACTIVE_USER_DAYS=30`
+| Command | Purpose |
+|---|---|
+| `/bot on` | 🟢 Enable video parsing |
+| `/bot off` | 🔴 Disable video parsing |
+| `/bot status` | ℹ️ Check parsing status |
 
-## Deployment
+When parsing is disabled, users do **not** receive videos. They receive a localized status message instead.
 
-Install:
+---
 
-```bash
-pip install -r requirements.txt
+## 🌍 Multi-Language System
+
+The bot supports a broad set of languages, including:
+
+🇮🇳 Hindi • Bhojpuri • English • Bengali • Telugu • Marathi • Tamil • Gujarati • Urdu • Kannada • Malayalam • Punjabi • Assamese • Maithili • Sanskrit • Nepali • Konkani • Sindhi • Dogri • Kashmiri • Manipuri • Bodo • Santali • Odia
+
+Plus:
+
+🇷🇺 Russian • 🇨🇳 Chinese • 🇯🇵 Japanese • 🇪🇸 Spanish • 🇫🇷 French • 🇩🇪 German • 🇵🇹 Portuguese • 🇸🇦 Arabic • 🇹🇷 Turkish • 🇮🇩 Indonesian • 🇻🇳 Vietnamese • 🇰🇷 Korean • 🇮🇹 Italian • 🇳🇱 Dutch • 🇵🇱 Polish • 🇺🇦 Ukrainian • 🇮🇷 Persian • 🇹🇭 Thai
+
+> 🌐 User-facing parsing-off and system messages are localized according to the selected language.
+
+---
+
+## 💎 Premium Feature Matrix
+
+| Feature | Status |
+|---|:---:|
+| 🎬 Video Parsing | ✅ |
+| 📦 5 Videos / Request | ✅ |
+| ⏱️ User Cooldown | ✅ |
+| 👑 Owner Cooldown Bypass | ✅ |
+| 🔄 Saved Progress | ✅ |
+| 💾 Firebase Persistence | ✅ |
+| 📜 Terms & Consent | ✅ |
+| 🌐 Multi-Language | ✅ |
+| 🇮🇳 Bhojpuri | ✅ |
+| 👤 Profile Welcome | ✅ |
+| 🔴 Bot ON/OFF | ✅ |
+| 📊 Statistics | ✅ |
+| 👥 User Management | ✅ |
+| 🔎 Activity Tracking | ✅ |
+| 📢 Broadcast | ✅ |
+| 📂 Source Management | ✅ |
+| 🧹 Auto Delete | ✅ |
+| 🛡️ Protected Content | ✅ |
+| 🚀 Render Ready | ✅ |
+| 🐳 Docker Ready | ✅ |
+
+---
+
+## 🔐 Privacy & Access
+
+- 👑 Administrative commands are restricted to the configured owner.
+- 💾 User progress and activity can persist through Firebase.
+- 🎬 Videos are copied through Telegram rather than being downloaded to the server.
+- 🛡️ Protected-content mode can be enabled for sent media.
+- 📜 Users must accept the Terms before accessing the video feature.
+
+---
+
+## 🚀 Deployment
+
+### 1️⃣ Upload
+
+Push the project files to your GitHub repository.
+
+### 2️⃣ Render
+
+Create/deploy the service using the included deployment configuration.
+
+### 3️⃣ Environment
+
+Keep your existing Render environment variables. Add any new variables only when required by your configuration.
+
+### 4️⃣ Start
+
+Deploy the latest commit and wait for the bot to connect.
+
+---
+
+## 🧊 Project Style
+
+```text
+                    ╭──────────────────────╮
+                    │   🧊 TOXICE HACKER   │
+                    │   PREMIUM BOT CORE   │
+                    ╰──────────┬───────────╯
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+           🎬 Media          👑 Admin         🌐 i18n
+              │                │                │
+              └────────────────┼────────────────┘
+                               │
+                          💾 Firebase
+                               │
+                          ⚡ Telegram
 ```
 
-Run:
+---
 
-```bash
-python bot.py
-```
+<div align="center">
 
-Never commit Telegram session files or Firebase service-account credentials.
+### 🛠️ Developed by **Toxice Hacker**
+
+**Premium Telegram Automation • Video Parsing • Admin Control**
+
+`Built with Python • Telegram • Firebase`
+
+</div>
